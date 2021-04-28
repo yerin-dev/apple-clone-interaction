@@ -50,6 +50,22 @@
       //각 요소의 높이를 scrollHeight로 지정
       sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
     }
+
+    yOffset = window.pageYOffset;
+    
+    //새로고침 했을때 기존의 스크롤 양을 비교하여 currentScene을 다시 설정한다.
+    let totalScrollHeight = 0;
+    //인덱스별로 for문을 돈다.
+    for (let i = 0; i < sceneInfo.length; i++) {
+      totalScrollHeight += sceneInfo[i].scrollHeight;
+      //현재 스크롤값보다 지금까지 for문에서 계산한 총 높이가 클 경우 => i가 지금 바라보고 있는 대상의 인덱스(i)일때,
+      //해당 active의 scene을 인덱스(i)로 바꿔준 후 for문을 중지한다.
+      if(totalScrollHeight >= yOffset) {
+        currentScene = i;
+        break;
+      }
+    }
+    document.body.setAttribute('id', `show-scene-${currentScene}`);
   }
 
   function scrollLoop(){
@@ -64,18 +80,19 @@
     }
 
     if(yOffset < prevScrollHeight) {
-      if(currentScene === 0) return;
+      if(currentScene === 0) return;  //브라우저 바운스 효과로 인해 마이너스가 되는 것을 방지(모바일)
       currentScene--;
     }
 
-    console.log('@@ currentScene',currentScene);
+    document.body.setAttribute('id', `show-scene-${currentScene}`);
   }
 
-  window.addEventListener('resize', setLayout);
   window.addEventListener('scroll', () => {
     yOffset = window.pageYOffset;
     scrollLoop();
   })
 
-  setLayout();
+  //DOM 구조만 끝나면 로드한다, 실행시점이 빠르다.
+  window.addEventListener('DOMContentLoaded', setLayout);
+  window.addEventListener('resize', setLayout);
 })();
