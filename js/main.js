@@ -1,4 +1,7 @@
 (()=> {
+
+  let yOffset = 0;  //pageYOffset 대신 쓸 변수
+
   const sceneInfo = [
     {
       //0
@@ -36,12 +39,19 @@
     //각 스크롤 섹션의 높이 세팅
     for (let i = 0; i < sceneInfo.length; i++) {
       sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight; //window 생략 가능
-      //각 요소의 높이를 scrollHeight로 지
+      //각 요소의 높이를 scrollHeight로 지정
       sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
     }
   }
 
+  function scrollLoop(){
+  }
+
   window.addEventListener('resize', setLayout);
-  
+  window.addEventListener('scroll', () => {
+    yOffset = window.pageYOffset;
+    scrollLoop();
+  });
+
   setLayout();
 })();
