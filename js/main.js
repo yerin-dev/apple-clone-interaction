@@ -19,8 +19,13 @@
         messageD: document.querySelector("#scroll-section-0 .main-message.d"),
       },
       values: {
-        messageA_opacity: [0, 1, {start:0.1, end:0.2}], //전체 애니메이션 진행에 대한 비율에서 등장시점과 끝나는 시점을 작성
-        messageB_opacity: [0, 1, {start:0.3, end:0.4}],
+        messageA_opacity_in: [0, 1, {start:0.1, end:0.2}], //전체 애니메이션 진행에 대한 비율에서 등장시점과 끝나는 시점을 작성
+        messageA_translateY_in: [20, 0, {start:0.1, end:0.2}],
+
+        messageA_opacity_out: [1, 0, {start:0.25, end:0.3}], //in이 0.1에서 0.2에 등장한다고 치자, out은 0.25부터 사라지기 시작할 것이다. 그리고 B의 등장 시작점인 0.3에 완전히 자취를 감출 것이다.
+        messageA_translateY_out: [0, -20, {start:0.25, end:0.3}],
+
+        messageB_opacity_in: [0, 1, {start:0.3, end:0.4}],
       }
     },
     {
@@ -139,11 +144,23 @@
     const objs = sceneInfo[currentScene].objs;
     const values = sceneInfo[currentScene].values;
     const currentYOffset = yOffset - prevScrollHeight;
+    const scrollHeight = sceneInfo[currentScene].scrollHeight;
+    const scrollRatio = currentYOffset / scrollHeight;
 
     switch (currentScene) {
       case 0:
-        let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
-        objs.messageA.style.opacity = messageA_opacity_in;
+        const messageA_opacity_in = calcValues(values.messageA_opacity_in, currentYOffset);
+        const messageA_opacity_out = calcValues(values.messageA_opacity_out, currentYOffset);
+        const messageA_translateY_in = calcValues(values.messageA_translateY_in, currentYOffset);
+        const messageA_translateY_out = calcValues(values.messageA_translateY_out, currentYOffset);
+
+        if(scrollRatio <= 0.22) {
+          objs.messageA.style.opacity = messageA_opacity_in;
+          objs.messageA.style.transform = `translateY(${messageA_translateY_in}%)`;
+        } else {
+          objs.messageA.style.opacity = messageA_opacity_out;
+          objs.messageA.style.transform = `translateY(${messageA_translateY_out}%)`;
+        }
         break;
       case 1:
         break;
