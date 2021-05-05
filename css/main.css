@@ -70,9 +70,13 @@ a {
 .scroll-section {
     border: 3px solid red;
     padding-top: 50vh;
+    position: relative;
 }
 
 #scroll-section-0 h1 {
+    position: relative;
+    top: -10vh;
+    z-index: 5;
     font-size: 4rem;
     text-align: center;
 }
@@ -81,6 +85,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+    top: 35vh;
     margin: 5px 0;
     height: 3em;
     font-size: 2.5rem;
@@ -117,15 +122,28 @@ a {
     font-size: 3rem;
     color: rgb(29, 29, 31);
 }
-.desc-message {
+
+.sticky-elem.desc-message {
     width: 45%;
     font-weight: bold;
+    opacity: 0;
 }
+
 .pin {
     width: 1px;
     height: 100px;
     background: rgb(29, 29, 31);
 }
+
+#scroll-section-2 .b {
+    top: 10%;
+    left: 40%;
+}
+#scroll-section-2 .c {
+    top: 15%;
+    left: 45%;
+}
+
 .mid-message {
     max-width: 1000px;
     margin: 0 auto;
@@ -133,9 +151,11 @@ a {
     font-size: 2rem;
     color: #888;
 }
+
 .mid-message strong {
     color: rgb(29, 29, 31);
 }
+
 .canvas-caption {
     max-width: 1000px;
     margin: 0 auto;
@@ -143,6 +163,7 @@ a {
     font-size: 1.2rem;
     color: #888;
 }
+
 .footer {
     display: flex;
     align-items: center;
@@ -151,12 +172,14 @@ a {
     color: white;
     background: darkorange;
 }
+
 .sticky-elem {
     display: none;
     position: fixed;
     left: 0;
     width: 100%;
 }
+
 #show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,
 #show-scene-2 #scroll-section-2 .sticky-elem,
@@ -169,27 +192,43 @@ a {
     #scroll-section-0 h1 {
         font-size: 9vw;
     }
+
     .main-message {
         font-size: 4vw;
     }
+
     .description {
         font-size: 2rem;
     }
+
     .description strong {
         font-size: 6rem;
     }
+
     #scroll-section-2 .main-message {
         font-size: 6vw;
     }
+
     .main-message small {
         font-size: 1.5vw;
     }
-    .desc-message {
+
+    .sticky-elem.desc-message {
         width: 20%;
     }
+
+    #scroll-section-2 .b {
+        top: 20%;
+        left: 53%;
+    }
+    #scroll-section-2 .c {
+        left: 55%;
+    }
+
     .mid-message {
         font-size: 4vw;
     }
+
     .canvas-caption {
         font-size: 2rem;
     }
