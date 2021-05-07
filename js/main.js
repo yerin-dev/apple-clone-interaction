@@ -24,6 +24,7 @@
       values: {
         videoImageCount: 300,
         imageSequence: [0, 299],
+        canvas_opacity: [1,0, {start: 0.9, end: 1}],
         messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }], //전체 애니메이션 진행에 대한 비율에서 등장시점과 끝나는 시점을 작성
         messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
         messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
@@ -207,6 +208,7 @@
 
         let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
         objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+        objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
 
         if (scrollRatio <= 0.22) {
           // in
@@ -325,7 +327,10 @@
     scrollLoop();
   })
 
-  //DOM 구조만 끝나면 로드한다, 실행시점이 빠르다.
-  window.addEventListener('DOMContentLoaded', setLayout);
+  window.addEventListener('load', () => {
+    setLayout();
+    //첫 이미지 canvas로 그리기
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+  });
   window.addEventListener('resize', setLayout);
 })();
